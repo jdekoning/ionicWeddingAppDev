@@ -1,32 +1,69 @@
-<ion-view title="Signup" id="page15">
+<ion-view title='<img class="title-image" src="../img/aanmeldshrimp.png" height="30"> Aanmelden' id="page15">
   <ion-header-bar class="bar-positive">
-    <h1 class="title">Signup</h1>
+    <h1 class="title">Aanmelden</h1>
   </ion-header-bar>
   <ion-content padding="true" class="has-header">
     <form id="signup-form5" class="list">
       <ion-list id="signup-list10">
-        <label class="item item-input" id="signup-input11" name="name">
-          <span class="input-label">Name</span>
-          <input type="text" placeholder="type your name here">
+        <label class="item item-input " id="signup-input11" ng-model="signup.ng-model">
+          <span class="input-label">Naam: </span>
+          <input type="text" placeholder="Vul hier je naam in">
         </label>
-        <label class="item item-input" id="signup-input12" name="username">
-          <span class="input-label">Username</span>
-          <input type="text" placeholder="type your username here">
+        <label class="item item-input" id="signup-input12" ng-model="signup.username">
+          <span class="input-label">Ticketnummer: </span>
+          <input type="text" placeholder="Vul hier je ticketnummer in">
         </label>
-        <label class="item item-input" id="signup-input13" name="password">
-          <span class="input-label">Password</span>
-          <input type="text" placeholder="type your password here">
+        <label class="item item-input" id="signup-input13" ng-model="signup.name2">
+          <span class="input-label">Eventueel naam partner: </span>
+          <input type="text" placeholder="Vul hier je naam in">
+        </label>
+        <label class="item item-input" id="signup-input14" ng-model="signup.username2">
+          <span class="input-label">Ticketnummer: </span>
+          <input type="text" placeholder="Vul hier je ticketnummer in">
+        </label>
+        <li class="item item-toggle">
+          Hele dag aanwezig?
+          <label class="toggle toggle-positive">
+            <input type="checkbox" ng-model="signup.presence">
+            <div class="track"><div class="handle"></div></div>
+          </label>
+        </li>
+        <label class="item item-input" ng-model="signup.presencetext">
+          <span class="input-label">Opmerkingen: </span>
+          <input type="text" placeholder="Eventuele opmerkingen">
+        </label>
+        <li class="item item-toggle">
+          Allergie?
+          <label class="toggle toggle-positive">
+            <input type="checkbox" ng-model="signup.allergies">
+            <div class="track"><div class="handle"></div></div>
+          </label>
+        </li>
+        <label class="item item-input" ng-model="signup.allergiestext">
+          <span class="input-label">Opmerkingen: </span>
+          <input type="text" placeholder="Eventuele opmerkingen">
+        </label>
+        <li class="item item-toggle">
+          Vegetarier?
+          <label class="toggle toggle-positive">
+            <input type="checkbox" ng-model="signup.vegetarian">
+            <div class="track"><div class="handle"></div></div>
+          </label>
+        </li>
+        <label class="item item-input" ng-model="signup.vegetariantext">
+          <span class="input-label">Opmerkingen: </span>
+          <input type="text" placeholder="Eventuele opmerkingen">
+        </label>
+        <span>Via dit emailadres kan onze crew contact met je opnemen over zaken die geheim zijn voor het bruidspaar.</span>
+        <label class="item item-input" ng-model="signup.email">
+          <span class="input-label">Emailadres: </span>
+          <input type="email">
+        </label>
+        <label class="item item-input" ng-model="signup.otherinfo">
+          <span class="input-label">Wil je nog iets toevoegen? </span>
+          <input type="text">
         </label>
       </ion-list>
-      <h4 id="signup-heading5" style="color:#000000;">Dietary preferences</h4>
-      <ion-radio id="signup-radio10" name="diet">Meat</ion-radio>
-      <ion-radio id="signup-radio11" name="diet">Fish</ion-radio>
-      <ion-radio id="signup-radio12" name="diet">Vegetarian</ion-radio>
-      <h4 id="signup-heading6" style="color:#000000;">Attendance</h4>
-      <ion-radio id="signup-radio13" name="attendance">Ceremony</ion-radio>
-      <ion-radio id="signup-radio14" name="attendance">Reception</ion-radio>
-      <ion-radio id="signup-radio15" name="attendance">Party</ion-radio>
-      <button id="signup-button10" class="button button-stable  button-block">Sign up</button>
     </form>
   </ion-content>
 </ion-view>

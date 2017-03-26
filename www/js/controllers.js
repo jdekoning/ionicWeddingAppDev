@@ -2,15 +2,73 @@ angular.module('app.controllers', [])
 
 .controller('newsCtrl', ['$rootScope', '$scope', '$stateParams', 'newsFactory', 'news',
 function ($rootScope, $scope, $stateParams, newsFactory, news) {
-    $rootScope.checkSession();
-    $scope.news = news;
+  $rootScope.checkSession();
+  $scope.news = news;
+
+  $ionicModal.fromTemplateUrl('templates/news-add.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.bulletinForm = modal;
+  });
+
+  $scope.addNews = function() {
+    $scope.bulletinForm.show();
+  };
+
+  $scope.closeAddNews = function() {
+    $scope.bulletinForm.hide();
+  };
+
+  $scope.myNewsItem = {title:"", owner:"", description:""};
+
+  $scope.submitNews = function() {
+
+    $scope.myNewsItem.date = new Date().toISOString();
+    // $scope.dish.comments.push($scope.myNewsItem);
+    // newsFactory.update({id:$scope.dish.id},$scope.dish);
+    newsFactory.post($scope.myNewsItem);
+
+
+    $scope.myNewsItem = {title:"", owner:"", description:""};
+    $scope.bulletinForm.$setPristine();
+
+    $scope.closeAddNews();
+    // $scope.popover.hide();
+  };
 }])
 
 .controller('bulletinCtrl', ['$rootScope', '$scope', '$stateParams', 'bulletinFactory', 'bulletin',
   function ($rootScope, $scope, $stateParams, bulletinFactory, bulletin) {
     $rootScope.checkSession();
     $scope.bulletin = bulletin;
-}])
+
+    $ionicModal.fromTemplateUrl('templates/bulletin-add.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.bulletinForm = modal;
+    });
+
+    $scope.addBulletin = function() {
+      $scope.bulletinForm.show();
+    };
+
+    $scope.closeAddBulletin = function() {
+      $scope.bulletinForm.hide();
+    };
+
+    $scope.myNewsItem = {title:"", owner:"", description:""};
+
+    $scope.submitBulletin = function() {
+      $scope.myBulletinItem.date = new Date().toISOString();
+      bulletinFactory.post($scope.myBulletinItem);
+
+      $scope.myBulletinItem = {title:"", owner:"", description:""};
+      $scope.bulletinForm.$setPristine();
+
+      $scope.closeAddBulletin();
+      // $scope.popover.hide();
+    };
+  }])
 
 .controller('venueRouteCtrl', ['$rootScope', '$scope', '$stateParams', 'venueFactory', 'venue',
   function ($rootScope, $scope, $stateParams, venueFactory, venue) {

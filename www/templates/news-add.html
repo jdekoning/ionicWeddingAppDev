@@ -1,0 +1,25 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Nieuws toevoegen</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeAddNews()">Sluiten</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form id="newsform" name="newsform" ng-submit="submitNews()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">De titel</span>
+          <input type="text" ng-model="myNews.title">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">De beschrijving</span>
+          <input type="text" ng-model="myNews.description">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Submit</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>
