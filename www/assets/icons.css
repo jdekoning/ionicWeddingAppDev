@@ -1,0 +1,86 @@
+.aanmeldshrimp {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/aanmeldshrimp.png');
+}
+
+.auto {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/Auto.png');
+}
+
+.boot {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/Boot.png');
+}
+
+.bus {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/bus.png');
+}
+
+.hotel {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/Hotel.png');
+}
+
+.kip {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/Kip.png');
+}
+
+.nieuwsmeeuw {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/Nieuwsmeeuw.png');
+}
+
+.prikbord {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/Prikbord.png');
+}
+
+.schoen {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/Schoen.png');
+}
+
+.contact {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/vissen_contactr.png');
+}
+
+.walvis {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  background-image: url('../img/Walvis.png');
+}
+
+.transparent {
+  background: transparent !important;
+}
+.image-modal {
+  width: 100% !important;
+  height: 100%;
+  top: 0 !important;
+  left: 0 !important;
+}

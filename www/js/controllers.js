@@ -1,7 +1,7 @@
 angular.module('app.controllers', [])
 
-.controller('newsCtrl', ['$rootScope', '$scope', '$stateParams', 'newsFactory', 'news',
-function ($rootScope, $scope, $stateParams, newsFactory, news) {
+.controller('newsCtrl', ['$rootScope', '$scope', '$stateParams', '$ionicModal', 'newsFactory', 'news',
+function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
   $rootScope.checkSession();
   $scope.news = news;
 
@@ -19,26 +19,27 @@ function ($rootScope, $scope, $stateParams, newsFactory, news) {
     $scope.bulletinForm.hide();
   };
 
-  $scope.myNewsItem = {title:"", owner:"", description:""};
+  $scope.mynews = {title:"", owner:"", description:"", date:""};
 
   $scope.submitNews = function() {
 
-    $scope.myNewsItem.date = new Date().toISOString();
-    // $scope.dish.comments.push($scope.myNewsItem);
+    $scope.mynews.date = new Date().toISOString();
+    $scope.mynews.owner = $rootScope.userEmail.replace($rootScope.emailPostFix,"");
+    // $scope.dish.comments.push($scope.mynews);
     // newsFactory.update({id:$scope.dish.id},$scope.dish);
-    newsFactory.post($scope.myNewsItem);
+    newsFactory.post($scope.mynews);
 
 
-    $scope.myNewsItem = {title:"", owner:"", description:""};
-    $scope.bulletinForm.$setPristine();
+    $scope.mynews = {title:"", owner:"", description:"", date:""};
+    $scope.bulletinForm.$pristine = true;
 
     $scope.closeAddNews();
     // $scope.popover.hide();
   };
 }])
 
-.controller('bulletinCtrl', ['$rootScope', '$scope', '$stateParams', 'bulletinFactory', 'bulletin',
-  function ($rootScope, $scope, $stateParams, bulletinFactory, bulletin) {
+.controller('bulletinCtrl', ['$rootScope', '$scope', '$stateParams', '$ionicModal', 'bulletinFactory', 'bulletin',
+  function ($rootScope, $scope, $stateParams, $ionicModal, bulletinFactory, bulletin) {
     $rootScope.checkSession();
     $scope.bulletin = bulletin;
 
@@ -56,14 +57,16 @@ function ($rootScope, $scope, $stateParams, newsFactory, news) {
       $scope.bulletinForm.hide();
     };
 
-    $scope.myNewsItem = {title:"", owner:"", description:""};
+    $scope.mybulletin = {title:"", owner:"", description:"", date:""};
 
     $scope.submitBulletin = function() {
-      $scope.myBulletinItem.date = new Date().toISOString();
-      bulletinFactory.post($scope.myBulletinItem);
+      $scope.mybulletin.date = new Date().toISOString();
+      $scope.mybulletin.owner = $rootScope.userEmail.replace($rootScope.emailPostFix,"");
+      console.info($scope.mybulletin);
+      bulletinFactory.post($scope.mybulletin);
 
-      $scope.myBulletinItem = {title:"", owner:"", description:""};
-      $scope.bulletinForm.$setPristine();
+      $scope.mybulletin = {title:"", owner:"", description:"", date:""};
+      $scope.bulletinForm.$pristine = true;
 
       $scope.closeAddBulletin();
       // $scope.popover.hide();
@@ -76,10 +79,13 @@ function ($rootScope, $scope, $stateParams, newsFactory, news) {
     $scope.venue = venue;
 }])
 
-.controller('dresscodeCtrl', ['$rootScope', '$scope', '$stateParams', 'dresscodeFactory', 'dresscode',
-function ($rootScope, $scope, $stateParams, dresscodeFactory, dresscode) {
+.controller('dresscodeCtrl', ['$rootScope', '$scope', '$stateParams', 'storage', 'dresscode',
+function ($rootScope, $scope, $stateParams, storage, dresscode) {
     $rootScope.checkSession();
     $scope.dresscode = dresscode;
+    // storage.$getDownloadURL().then(function(url) {
+    //   $scope.url = url;
+    // });
   }])
 
 .controller('funCtrl', ['$rootScope', '$scope', '$stateParams',
@@ -124,7 +130,7 @@ function ($rootScope, $scope, $stateParams) {
         $rootScope.notifications("Vul de benodigde velden in");
         return false;
       }
-      var email = username + "@trouwapp.nl";
+      var email = username + $rootScope.emailPostFix;
       $rootScope.auth.signInWithEmailAndPassword(email,password)
         .then(function (user) {
           $rootScope.hide();

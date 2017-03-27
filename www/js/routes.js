@@ -48,6 +48,11 @@ angular.module('app.routes', [])
           dresscode: ['dresscodeFactory', function(dresscodeFactory){
             return dresscodeFactory.query();
           }]
+          ,
+          storage: ['dresscodeFactory', function(dresscodeFactory) {
+            return "";
+            // return dresscodeFactory.download();
+          }]
         }
       }
     }

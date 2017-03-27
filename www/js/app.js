@@ -55,6 +55,7 @@ angular.module('app', ['ionic', 'firebase', 'app.controllers', 'app.routes', 'ap
 
   $rootScope.userEmail = null;
   $rootScope.auth = firebase.auth();
+  $rootScope.emailPostFix = "@trouwapp.nl";
 
   $rootScope.notifications = function(text) {
     $rootScope.show(text);

@@ -19,14 +19,14 @@ angular.module('app.services', ['firebase'])
       }};
   }])
 
-  .factory('dresscodeFactory', ['$firebaseObject', function($firebaseObject){
-    var storageRef = firebase.storage().ref();
+  .factory('dresscodeFactory', ['$firebaseObject','$firebaseStorage', function($firebaseObject, $firebaseStorage){
     return {
       query: function() {
         return $firebaseObject(firebase.database().ref('dresscode'))
       },
       download: function() {
-        return ""
+        return "";
+        // return $firebaseStorage(firebase.storage().ref());
       }
     };
   }])
