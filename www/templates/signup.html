@@ -5,65 +5,66 @@
   <ion-content padding="true" class="has-header">
     <form id="signup-form5" class="list">
       <ion-list id="signup-list10">
-        <label class="item item-input " id="signup-input11" ng-model="signup.ng-model">
+        <label class="item item-input" id="signup-input1">
           <span class="input-label">Naam: </span>
-          <input type="text" placeholder="Vul hier je naam in">
+          <input type="text" ng-model="signup.name1" placeholder="Vul hier je naam in">
         </label>
-        <label class="item item-input" id="signup-input12" ng-model="signup.username">
+        <label class="item item-input" id="signup-input12">
           <span class="input-label">Ticketnummer: </span>
-          <input type="text" placeholder="Vul hier je ticketnummer in">
+          <input type="text" ng-model="signup.username1" placeholder="Vul hier je ticketnummer in">
         </label>
-        <label class="item item-input" id="signup-input13" ng-model="signup.name2">
+        <label class="item item-input" id="signup-input13">
           <span class="input-label">Eventueel naam partner: </span>
-          <input type="text" placeholder="Vul hier je naam in">
+          <input type="text" ng-model="signup.name2" placeholder="Vul hier je naam in">
         </label>
-        <label class="item item-input" id="signup-input14" ng-model="signup.username2">
+        <label class="item item-input" id="signup-input14">
           <span class="input-label">Ticketnummer: </span>
-          <input type="text" placeholder="Vul hier je ticketnummer in">
+          <input type="text" ng-model="signup.username2" placeholder="Vul hier je ticketnummer in">
         </label>
         <li class="item item-toggle">
-          Hele dag aanwezig?
+          Hele dag aanwezig?{{signup.presence.text}}
           <label class="toggle toggle-positive">
             <input type="checkbox" ng-model="signup.presence">
             <div class="track"><div class="handle"></div></div>
           </label>
         </li>
-        <label class="item item-input" ng-model="signup.presencetext">
+        <label class="item item-input">
           <span class="input-label">Opmerkingen: </span>
-          <input type="text" placeholder="Eventuele opmerkingen">
+          <input type="text" ng-model="signup.presencetext" placeholder="Eventuele opmerkingen">
         </label>
         <li class="item item-toggle">
-          Allergie?
+          Allergie?{{signup.allergies.text}}
           <label class="toggle toggle-positive">
             <input type="checkbox" ng-model="signup.allergies">
             <div class="track"><div class="handle"></div></div>
           </label>
         </li>
-        <label class="item item-input" ng-model="signup.allergiestext">
+        <label class="item item-input">
           <span class="input-label">Opmerkingen: </span>
-          <input type="text" placeholder="Eventuele opmerkingen">
+          <input type="text" ng-model="signup.allergiestext" placeholder="Eventuele opmerkingen">
         </label>
         <li class="item item-toggle">
-          Vegetarier?
+          Vegetarisch?{{signup.vegetarian.text}}
           <label class="toggle toggle-positive">
             <input type="checkbox" ng-model="signup.vegetarian">
             <div class="track"><div class="handle"></div></div>
           </label>
         </li>
-        <label class="item item-input" ng-model="signup.vegetariantext">
+        <label class="item item-input">
           <span class="input-label">Opmerkingen: </span>
-          <input type="text" placeholder="Eventuele opmerkingen">
+          <input type="text" ng-model="signup.vegetariantext" placeholder="Eventuele opmerkingen">
         </label>
         <span>Via dit emailadres kan onze crew contact met je opnemen over zaken die geheim zijn voor het bruidspaar.</span>
-        <label class="item item-input" ng-model="signup.email">
+        <label class="item item-input">
           <span class="input-label">Emailadres: </span>
-          <input type="email">
+          <input type="email" ng-model="signup.email" placeholder="Hier graag je email">
         </label>
-        <label class="item item-input" ng-model="signup.otherinfo">
+        <label class="item item-input">
           <span class="input-label">Wil je nog iets toevoegen? </span>
-          <input type="text">
+          <input type="text" ng-model="signup.otherinfo" placeholder="Dat mag dan hier">
         </label>
       </ion-list>
+      <button id="login-button8" class="button button-stable button-block" type="submit">Aanmelden</button>
     </form>
   </ion-content>
 </ion-view>
