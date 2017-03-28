@@ -1,86 +1,26 @@
-.aanmeldshrimp {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/aanmeldshrimp.png');
-}
+.ion-shrimp {
+  content: url('../img/aanmeldshrimp.svg') !important; }
 
-.auto {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/Auto.png');
-}
+.ion-prikbord {
+  content: url('../img/Prikbord_blauw.svg') !important; }
 
-.boot {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/Boot.png');
-}
+.ion-auto {
+  content: url('../img/Auto.svg') !important; }
 
-.bus {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/bus.png');
-}
+.ion-bus {
+  content: url('../img/Bus.svg') !important; }
 
-.hotel {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/Hotel.png');
-}
+.ion-contact {
+  content: url('../img/contact.svg') !important; }
 
-.kip {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/Kip.png');
-}
+.ion-dresscode {
+  content: url('../img/Dresscode.svg') !important; }
 
-.nieuwsmeeuw {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/Nieuwsmeeuw.png');
-}
+.ion-hotel {
+  content: url('../img/Hotel.svg') !important; }
 
-.prikbord {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/Prikbord.png');
-}
+.ion-nieuws {
+  content: url('../img/nieuwsmeeuw.svg') !important; }
 
-.schoen {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/Schoen.png');
-}
-
-.contact {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/vissen_contactr.png');
-}
-
-.walvis {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-image: url('../img/Walvis.png');
-}
-
-.transparent {
-  background: transparent !important;
-}
-.image-modal {
-  width: 100% !important;
-  height: 100%;
-  top: 0 !important;
-  left: 0 !important;
-}
+.ion-reisinfo {
+  content: url('../img/Reisinfo.svg') !important; }
