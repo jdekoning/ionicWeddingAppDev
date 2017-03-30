@@ -99,22 +99,31 @@ function ($rootScope, $scope, $stateParams) {
     $scope.contacts = contacts;
   }])
 
-.controller('menuCtrl', ['$scope', '$rootScope', '$stateParams',
-  function ($scope, $rootScope) {
-    $scope.signOut = function () {$rootScope.logout()}
+.controller('menuCtrl', ['$scope', '$rootScope', '$window', '$stateParams',
+  function ($scope, $rootScope, $window) {
+    $scope.signOut = function () {
+      $window.location.href = ("#/login");
+      $rootScope.logout()
+    }
   }])
 
 .controller('loginCtrl', ['$scope', '$rootScope', '$window',
   function ($scope, $rootScope, $window) {
     $rootScope.auth.onAuthStateChanged(function(user, error) {
-      if (error) {
+      if (user) {
+        $rootScope.userEmail = user.email;
+        // $window.location.href = ("#/signup");
+      }
+      else{
         console.error("got an error in session check");
         $rootScope.userEmail = null;
-      } else if (user) {
-        // user authenticated with Firebase
-        $rootScope.userEmail = user.email;
-        $window.location.href = ("#/side-menu/news");
-      }});
+    }});
+
+    var timestampDiff = 1503666000 - new Date().getTime()/1000;
+    $scope.days = Math.floor(timestampDiff/3600/24);
+    $scope.hours = Math.floor((timestampDiff - $scope.days*3600*24)/3600);
+    $scope.minutes = Math.floor((timestampDiff - $scope.days*3600*24 - $scope.hours*3600)/60);
+    $scope.seconds = Math.floor((timestampDiff - $scope.days*3600*24 - $scope.hours*3600 - $scope.minutes*60));
 
     $scope.user = {
       username: "",
@@ -124,8 +133,8 @@ function ($rootScope, $scope, $stateParams) {
       $rootScope.show('Authenticeren..');
       var username = this.user.username;
       var password = this.user.password;
-      this.user.username = "";
-      this.user.password = "";
+      $scope.user.username = "";
+      $scope.user.password = "";
       if (!username || !password) {
         $rootScope.notifications("Vul de benodigde velden in");
         return false;
@@ -135,20 +144,25 @@ function ($rootScope, $scope, $stateParams) {
         .then(function (user) {
           $rootScope.hide();
           $rootScope.userEmail = user.email;
-          $window.location.href = ("#/side-menu/news");
+          console.debug("Succesvol ingelogd");
+          $window.location.href = ("#/signup");
         }).catch(function(error) {
           console.error("got error: " + error.code);
           $rootScope.hide();
           if (error.code == 'auth/user-disabled') {
+            console.debug("Ongeldige naam");
             $rootScope.notifications('Ongeldige naam');
           }
           else if (error.code == 'auth/wrong-password') {
+            console.debug("Ongeldig wachtwoord");
             $rootScope.notifications('Ongeldig wachtwoord');
           }
           else if (error.code == 'auth/user-not-found') {
+            console.debug("Ongeldige user");
             $rootScope.notifications('Ongeldige user');
           }
           else {
+            console.debug("Ohoh, er is iets misgegaan. Sorry!");
             $rootScope.notifications('Ohoh, er is iets misgegaan. Sorry!');
           }
         });
@@ -156,5 +170,25 @@ function ($rootScope, $scope, $stateParams) {
   }
 ])
 
-.controller('signupCtrl', ['$scope', '$stateParams',
-function ($scope, $stateParams) {}]);
+.controller('signupCtrl', ['$rootScope','$scope','$window', '$stateParams', 'userFactory',
+  function ($rootScope, $scope, $window, $stateParams, userFactory) {
+    var user = $rootScope.auth.currentUser;
+    $scope.signup = {name1:"", username1:"", name2:"", username2:"", presence:true, presencetext:"", allergies:false, allergiestext:"", vegetarian:false, vegetariantext:"", email:"", otherinfo:""};
+    if (user) {
+      $scope.signup.username1 = user.email.replace($rootScope.emailPostFix,"");
+      user.providerData.forEach(function (profile) {
+        console.log("  Sign-in provider: "+profile.providerId);
+        console.log("  Provider-specific UID: "+profile.uid);
+        console.log("  Name: "+profile.displayName);
+        console.log("  Email: "+profile.email);
+        console.log("  Photo URL: "+profile.photoURL);
+      });
+    } else {
+    }
+    $scope.doSignup = function() {
+      console.info($scope.signup);
+      $scope.signup = {name1:"", username1:"", name2:"", username2:"", presence:true, presencetext:"", allergies:false, allergiestext:"", vegetarian:false, vegetariantext:"", email:"", otherinfo:""};
+      $window.location.href = ("#/side-menu/news");
+      // userFactory.put()
+    }
+}]);

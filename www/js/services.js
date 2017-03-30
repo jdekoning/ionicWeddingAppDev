@@ -47,4 +47,14 @@ angular.module('app.services', ['firebase'])
       query: function() {
         return $firebaseObject(firebase.database().ref('contact'))
       }};
+  }])
+
+  .factory('userFactory', ['$firebaseObject', function($firebaseObject){
+    var storageRef = firebase.database().ref('users');
+    return {
+      query: function() {
+        return $firebaseObject(storageRef)
+      },
+      post: function(storageObject) {storageRef.push().set(storageObject)}
+    };
   }]);

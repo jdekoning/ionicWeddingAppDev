@@ -72,12 +72,9 @@ angular.module('app', ['ionic', 'firebase', 'app.controllers', 'app.routes', 'ap
   $rootScope.checkSession = function() {
     // console.debug("checking session");
     $rootScope.auth.onAuthStateChanged(function(user, error) {
-      if (error) {
-        console.error("got an error in session check");
-        $rootScope.userEmail = null;
-        $window.location.href = ("#/login");
-      } else if (user) {
+      if (user) {
         $rootScope.userEmail = user.email;
+
       } else {
         $rootScope.userEmail = null;
         $window.location.href = ("#/login");
