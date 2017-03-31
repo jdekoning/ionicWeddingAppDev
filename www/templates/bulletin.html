@@ -6,21 +6,7 @@
     <button class="button icon ion-android-add-circle" ng-click="addBulletin()">
     </button>
   </ion-nav-buttons>
-  <div class="bar bar-subheader">
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
-    <i class="icon ion-prikbord"></i>
+  <div class="spread bar bar-subheader">
     <i class="icon ion-prikbord"></i>
     <i class="icon ion-prikbord"></i>
     <i class="icon ion-prikbord"></i>
@@ -28,14 +14,15 @@
     <i class="icon ion-prikbord"></i>
   </div>
   <ion-content padding="true" class="has-subheader has-header">
-    <div ng-repeat="item in bulletin" id="news-list">
+    <div data-ng-repeat="item in bulletin | toArray | orderBy:'-date'" id="news-list">
+    <!--<div data-ng-repeat="item in bulletin" id="news-list">-->
       <div class="card">
         <div class="item item-calm item-divider">
-          {{item.title}}
+          {{item.title}} met datum: {{item.date}}
         </div>
         <div class="item item-thumbnail-left item-text-wrap">
           <img ng-src="">
-          <h2>{{item.owner}} zegt</h2>
+          <h2>{{item.owner}}:</h2>
           <h3>{{item.description}}</h3>
         </div>
       </div>

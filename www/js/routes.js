@@ -1,4 +1,4 @@
-angular.module('app.routes', [])
+angular.module('app.routes', ['firebase'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -46,6 +46,7 @@ angular.module('app.routes', [])
         controller: 'dresscodeCtrl',
         resolve: {
           dresscode: ['dresscodeFactory', function(dresscodeFactory){
+            console.log("trying dresscode query");
             return dresscodeFactory.query();
           }]
           ,

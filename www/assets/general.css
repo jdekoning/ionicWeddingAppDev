@@ -1,1 +1,10 @@
+.spread {
+  display: flex;
+  justify-content:space-between;
+}
 
+.whitetext {
+  width: 50px;
+  text-align: center;
+  color: white;
+}

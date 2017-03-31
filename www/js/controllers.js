@@ -2,9 +2,9 @@ angular.module('app.controllers', [])
 
 .controller('newsCtrl', ['$rootScope', '$scope', '$stateParams', '$ionicModal', 'newsFactory', 'news',
 function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
-  $rootScope.checkSession();
+  $rootScope.checkSession('news');
   $scope.news = news;
-
+  console.log($scope.news);
   $ionicModal.fromTemplateUrl('templates/news-add.html', {
     scope: $scope
   }).then(function(modal) {
@@ -24,7 +24,7 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
   $scope.submitNews = function() {
 
     $scope.mynews.date = new Date().toISOString();
-    $scope.mynews.owner = $rootScope.userEmail.replace($rootScope.emailPostFix,"");
+    $scope.mynews.owner = $rootScope.userInfo.name1;
     // $scope.dish.comments.push($scope.mynews);
     // newsFactory.update({id:$scope.dish.id},$scope.dish);
     newsFactory.post($scope.mynews);
@@ -40,7 +40,7 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
 
 .controller('bulletinCtrl', ['$rootScope', '$scope', '$stateParams', '$ionicModal', 'bulletinFactory', 'bulletin',
   function ($rootScope, $scope, $stateParams, $ionicModal, bulletinFactory, bulletin) {
-    $rootScope.checkSession();
+    $rootScope.checkSession('bulletin');
     $scope.bulletin = bulletin;
 
     $ionicModal.fromTemplateUrl('templates/bulletin-add.html', {
@@ -61,7 +61,8 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
 
     $scope.submitBulletin = function() {
       $scope.mybulletin.date = new Date().toISOString();
-      $scope.mybulletin.owner = $rootScope.userEmail.replace($rootScope.emailPostFix,"");
+      combinedowner = function() { if($rootScope.userInfo.name2) {return $rootScope.userInfo.name1 + " en " + $rootScope.userInfo.name2} else {return $rootScope.userInfo.name1} }
+      $scope.mybulletin.owner = combinedowner();
       console.info($scope.mybulletin);
       bulletinFactory.post($scope.mybulletin);
 
@@ -75,13 +76,14 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
 
 .controller('venueRouteCtrl', ['$rootScope', '$scope', '$stateParams', 'venueFactory', 'venue',
   function ($rootScope, $scope, $stateParams, venueFactory, venue) {
-    $rootScope.checkSession();
+    $rootScope.checkSession('venue');
     $scope.venue = venue;
 }])
 
 .controller('dresscodeCtrl', ['$rootScope', '$scope', '$stateParams', 'storage', 'dresscode',
 function ($rootScope, $scope, $stateParams, storage, dresscode) {
-    $rootScope.checkSession();
+  console.log("starting drescode controller");
+    $rootScope.checkSession('dresscode');
     $scope.dresscode = dresscode;
     // storage.$getDownloadURL().then(function(url) {
     //   $scope.url = url;
@@ -90,35 +92,25 @@ function ($rootScope, $scope, $stateParams, storage, dresscode) {
 
 .controller('funCtrl', ['$rootScope', '$scope', '$stateParams',
 function ($rootScope, $scope, $stateParams) {
-  $rootScope.checkSession();
+  $rootScope.checkSession('funCtrl');
 }])
 
 .controller('contactCtrl', ['$rootScope', '$scope', '$stateParams', 'contactFactory', 'contacts',
   function ($rootScope, $scope, $stateParams, contactFactory, contacts) {
-    $rootScope.checkSession();
+    $rootScope.checkSession('contact');
     $scope.contacts = contacts;
   }])
 
 .controller('menuCtrl', ['$scope', '$rootScope', '$window', '$stateParams',
-  function ($scope, $rootScope, $window) {
+  function ($scope, $rootScope, $window, $stateParams) {
     $scope.signOut = function () {
-      $window.location.href = ("#/login");
-      $rootScope.logout()
+      $rootScope.logout();
     }
   }])
 
 .controller('loginCtrl', ['$scope', '$rootScope', '$window',
   function ($scope, $rootScope, $window) {
-    $rootScope.auth.onAuthStateChanged(function(user, error) {
-      if (user) {
-        $rootScope.userEmail = user.email;
-        // $window.location.href = ("#/signup");
-      }
-      else{
-        console.error("got an error in session check");
-        $rootScope.userEmail = null;
-    }});
-
+    $rootScope.checkSession('login');
     var timestampDiff = 1503666000 - new Date().getTime()/1000;
     $scope.days = Math.floor(timestampDiff/3600/24);
     $scope.hours = Math.floor((timestampDiff - $scope.days*3600*24)/3600);
@@ -145,7 +137,7 @@ function ($rootScope, $scope, $stateParams) {
           $rootScope.hide();
           $rootScope.userEmail = user.email;
           console.debug("Succesvol ingelogd");
-          $window.location.href = ("#/signup");
+          $window.location.href = ("#/side-menu/news");
         }).catch(function(error) {
           console.error("got error: " + error.code);
           $rootScope.hide();
@@ -172,23 +164,25 @@ function ($rootScope, $scope, $stateParams) {
 
 .controller('signupCtrl', ['$rootScope','$scope','$window', '$stateParams', 'userFactory',
   function ($rootScope, $scope, $window, $stateParams, userFactory) {
-    var user = $rootScope.auth.currentUser;
-    $scope.signup = {name1:"", username1:"", name2:"", username2:"", presence:true, presencetext:"", allergies:false, allergiestext:"", vegetarian:false, vegetariantext:"", email:"", otherinfo:""};
-    if (user) {
-      $scope.signup.username1 = user.email.replace($rootScope.emailPostFix,"");
-      user.providerData.forEach(function (profile) {
-        console.log("  Sign-in provider: "+profile.providerId);
-        console.log("  Provider-specific UID: "+profile.uid);
-        console.log("  Name: "+profile.displayName);
-        console.log("  Email: "+profile.email);
-        console.log("  Photo URL: "+profile.photoURL);
-      });
-    } else {
-    }
+    $rootScope.checkSession('signup');
+    $scope.signup = $rootScope.userInfo;
+    $scope.correctuser = "";
+
+    $rootScope.$watch(
+      function() { return $rootScope.userName; },
+      function() { $scope.correctuser = $rootScope.userName; }
+    );
+    $rootScope.$watch(
+      function() { return $rootScope.userInfo; },
+      function() { $scope.signup = $rootScope.userInfo; }
+    );
+
     $scope.doSignup = function() {
+      $scope.signup.username1 = $rootScope.userName;
       console.info($scope.signup);
-      $scope.signup = {name1:"", username1:"", name2:"", username2:"", presence:true, presencetext:"", allergies:false, allergiestext:"", vegetarian:false, vegetariantext:"", email:"", otherinfo:""};
+      // console.info($rootScope.auth.currentUser.uid);
+      userFactory.post($rootScope.auth.currentUser.uid, $scope.signup);
       $window.location.href = ("#/side-menu/news");
-      // userFactory.put()
     }
 }]);
+

@@ -2,21 +2,7 @@
   <ion-header-bar align-title="center" class="bar-calm">
     <h1 class="title">Aanmelden</h1>
   </ion-header-bar>
-  <div class="bar bar-subheader">
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
-    <i class="icon ion-shrimp"></i>
+  <div class="spread bar bar-subheader">
     <i class="icon ion-shrimp"></i>
     <i class="icon ion-shrimp"></i>
     <i class="icon ion-shrimp"></i>
@@ -33,19 +19,20 @@
         </label>
         <label class="item item-input item-icon-right" id="signup-input12">
           <span class="input-label">Ticketnummer: </span>
-          <input type="text" name="username1" ng-model="signup.username1" placeholder="Vul hier je ticketnummer in" required>
-          <i ng-show="signupForm.username1.$invalid" class="icon ion-help-buoy assertive"></i>
+          <input class="padding" type="text" name="username1" ng-value="correctuser" disabled>
         </label>
         <label class="item item-input" id="signup-input13">
           <span class="input-label">Eventueel naam partner: </span>
-          <input type="text" ng-model="signup.name2" placeholder="Vul hier je naam in">
+          <input type="text" ng-model="signup.name2" placeholder="Schrijf hier">
         </label>
         <label class="item item-input" id="signup-input14">
           <span class="input-label">Ticketnummer partner: </span>
-          <input type="text" ng-model="signup.username2" placeholder="Vul hier je ticketnummer in">
+          <input type="text" ng-model="signup.username2" placeholder="Schrijf hier">
         </label>
-        <li class="item item-toggle">
-          Hele dag aanwezig?
+        <li class="item item-toggle row">
+          <div class="inline col-67 padding">Hele dag aanwezig?</div>
+          <div ng-show="signup.presence" class="inline padding">Ja</div>
+          <div ng-hide="signup.presence" class="inline padding">Nee</div>
           <label class="toggle toggle-positive">
             <input type="checkbox" ng-model="signup.presence">
             <div class="track"><div class="handle"></div></div>
@@ -55,8 +42,10 @@
           <span class="input-label">Opmerkingen: </span>
           <input type="text" ng-model="signup.presencetext" placeholder="Welk deel wil je wel bijwonen?">
         </label>
-        <li class="item item-toggle">
-          Allergie?
+        <li class="item item-toggle row">
+          <div class="inline col-67 padding">Allergie?</div>
+          <div ng-show="signup.allergies" class="inline padding">Ja</div>
+          <div ng-hide="signup.allergies" class="inline padding">Nee</div>
           <label class="toggle toggle-positive">
             <input type="checkbox" ng-model="signup.allergies">
             <div class="track"><div class="handle"></div></div>
@@ -66,8 +55,10 @@
           <span class="input-label">Opmerkingen: </span>
           <input type="text" ng-model="signup.allergiestext" placeholder="Eventuele opmerkingen">
         </label>
-        <li class="item item-toggle">
-          Vegetarisch?
+        <li class="item item-toggle row">
+          <div class="inline col-67 padding">Vegetarisch?</div>
+          <div ng-show=signup.vegetarian class="inline padding">Ja</div>
+          <div ng-hide=signup.vegetarian class="inline padding">Nee</div>
           <label class="toggle toggle-positive">
             <input type="checkbox" ng-model="signup.vegetarian">
             <div class="track"><div class="handle"></div></div>
