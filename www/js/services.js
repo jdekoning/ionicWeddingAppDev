@@ -6,7 +6,7 @@ angular.module('app.services', ['firebase'])
     var storageRef = firebase.database().ref('news');
     return {
       query: function() {
-        return $firebaseArray(storageRef.orderByChild("date").limitToLast(3))
+        return $firebaseArray(storageRef.orderByChild("date").limitToLast(25))
       },
       post: function(storageObject) {storageRef.push().set(storageObject)}
     };

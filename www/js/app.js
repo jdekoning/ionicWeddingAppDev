@@ -51,7 +51,7 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
         $rootScope.hide()
       },200);
     });
-    // console.info(ionic.Platform.isWebView());
+    console.info(ionic.Platform.platform());
     if(ionic.Platform.platform()=='win32'){
       console.log("windows platform, playing Audio manually");
       var audio = new Audio('../audio/The_Love_Boat_old_school.mp3');
