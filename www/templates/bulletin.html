@@ -14,14 +14,14 @@
     <i class="icon ion-prikbord"></i>
   </div>
   <ion-content padding="true" class="has-subheader has-header">
-    <div data-ng-repeat="item in bulletin | toArray | orderBy:'-date'" id="news-list">
-    <!--<div data-ng-repeat="item in bulletin" id="news-list">-->
+    <div ng-repeat="item in bulletin | orderObjectBy:'date':true" id="bulletin-list">
       <div class="card">
-        <div class="item item-calm item-divider">
-          {{item.title}} met datum: {{item.date}}
+        <div class="item item-calm item-divider item-icon-right">
+          <i class="icon ion-android-remove-circle" ng-show="isMine(item)" ng-click="removeEntry(item)"></i>
+          {{item.title}} <h5>gepost op: {{item.simpledate}}</h5>
         </div>
         <div class="item item-thumbnail-left item-text-wrap">
-          <img ng-src="">
+          <img ng-src="{{getImage()}}">
           <h2>{{item.owner}}:</h2>
           <h3>{{item.description}}</h3>
         </div>

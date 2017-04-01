@@ -4,37 +4,51 @@ angular.module('app.controllers', [])
 function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
   $rootScope.checkSession('news');
   $scope.news = news;
-  console.log($scope.news);
+  $scope.isadmin = false;
+
+  $scope.removeEntry = function(item) {
+    news.$remove(item.$key)
+  };
+
+  $scope.getImage = function(item) {
+    if (item && item.imageurl) {return item.imageurl;}
+    else {return "img/nieuwsmeeuw.svg";}
+  };
+
+  $rootScope.$watch(
+    function() { return $rootScope.userInfo;},
+    function() { $scope.isadmin = $rootScope.userInfo.isadmin; }
+  );
+
   $ionicModal.fromTemplateUrl('templates/news-add.html', {
     scope: $scope
   }).then(function(modal) {
-    $scope.bulletinForm = modal;
+    $scope.newsForm = modal;
   });
 
   $scope.addNews = function() {
-    $scope.bulletinForm.show();
+    $scope.newsForm.show();
   };
 
   $scope.closeAddNews = function() {
-    $scope.bulletinForm.hide();
+    $scope.newsForm.hide();
   };
 
-  $scope.mynews = {title:"", owner:"", description:"", date:""};
+  $scope.mynews = {title:"", owner:"", description:"", date:"", simpledate: "", uid:"", imgurl:""};
 
   $scope.submitNews = function() {
-
-    $scope.mynews.date = new Date().toISOString();
-    $scope.mynews.owner = $rootScope.userInfo.name1;
-    // $scope.dish.comments.push($scope.mynews);
-    // newsFactory.update({id:$scope.dish.id},$scope.dish);
+    var date = new Date();
+    $scope.mynews.simpledate = date.toLocaleString("nl-NL");
+    $scope.mynews.date = date.toISOString();
+    $scope.mynews.uid = $rootScope.uid;
+    combinedowner = function() { if($rootScope.userInfo.name2) {return $rootScope.userInfo.name1 + " en " + $rootScope.userInfo.name2} else {return $rootScope.userInfo.name1} };
+    $scope.mynews.owner = combinedowner();
     newsFactory.post($scope.mynews);
 
-
-    $scope.mynews = {title:"", owner:"", description:"", date:""};
-    $scope.bulletinForm.$pristine = true;
+    $scope.mynews = {title:"", owner:"", description:"", date:"", simpledate: "", uid:"", imgurl:""};
+    $scope.newsForm.$pristine = true;
 
     $scope.closeAddNews();
-    // $scope.popover.hide();
   };
 }])
 
@@ -42,6 +56,32 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
   function ($rootScope, $scope, $stateParams, $ionicModal, bulletinFactory, bulletin) {
     $rootScope.checkSession('bulletin');
     $scope.bulletin = bulletin;
+
+    $scope.isadmin = false;
+    $scope.uid = "";
+
+    $scope.isMine = function(item) {
+      return $scope.isadmin || item.uid == $scope.uid;
+    };
+
+    $scope.getImage = function(item) {
+      if (item && item.imageurl) {return item.imageurl;}
+      else {return "img/Aftelkip.svg";}
+    };
+
+    $rootScope.$watch(
+      function() { return $rootScope.uid;},
+      function() { $scope.uid = $rootScope.uid;}
+    );
+
+    $rootScope.$watch(
+      function() { return $rootScope.userInfo;},
+      function() { $scope.isadmin = $rootScope.userInfo.isadmin;}
+    );
+
+    $scope.removeEntry = function(item) {
+      bulletin.$remove(item.$key)
+    };
 
     $ionicModal.fromTemplateUrl('templates/bulletin-add.html', {
       scope: $scope
@@ -57,16 +97,19 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
       $scope.bulletinForm.hide();
     };
 
-    $scope.mybulletin = {title:"", owner:"", description:"", date:""};
+    $scope.mybulletin = {title:"", owner:"", description:"", date:"", simpledate: "", uid:"", imgurl:""};
 
     $scope.submitBulletin = function() {
+      var date = new Date();
+      $scope.mybulletin.simpledate = date.toLocaleString("nl-NL");
       $scope.mybulletin.date = new Date().toISOString();
+      $scope.mybulletin.uid = $scope.uid;
       combinedowner = function() { if($rootScope.userInfo.name2) {return $rootScope.userInfo.name1 + " en " + $rootScope.userInfo.name2} else {return $rootScope.userInfo.name1} }
       $scope.mybulletin.owner = combinedowner();
-      console.info($scope.mybulletin);
+
       bulletinFactory.post($scope.mybulletin);
 
-      $scope.mybulletin = {title:"", owner:"", description:"", date:""};
+      $scope.mybulletin = {title:"", owner:"", description:"", date:"", simpledate: "", uid:"", imgurl:""};
       $scope.bulletinForm.$pristine = true;
 
       $scope.closeAddBulletin();
@@ -82,7 +125,6 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
 
 .controller('dresscodeCtrl', ['$rootScope', '$scope', '$stateParams', 'storage', 'dresscode',
 function ($rootScope, $scope, $stateParams, storage, dresscode) {
-  console.log("starting drescode controller");
     $rootScope.checkSession('dresscode');
     $scope.dresscode = dresscode;
     // storage.$getDownloadURL().then(function(url) {
@@ -99,6 +141,9 @@ function ($rootScope, $scope, $stateParams) {
   function ($rootScope, $scope, $stateParams, contactFactory, contacts) {
     $rootScope.checkSession('contact');
     $scope.contacts = contacts;
+    $scope.doMail = function() {
+      console.info("someone called the mail button");
+    }
   }])
 
 .controller('menuCtrl', ['$scope', '$rootScope', '$window', '$stateParams',
@@ -181,7 +226,6 @@ function ($rootScope, $scope, $stateParams) {
         if($scope.signup.name2 === "" && $scope.signup.username2 === "") {return true}
         else return $scope.signup.name2 !== "" && $scope.signup.username2 !== "";
       };
-      console.log("validity: " + validity());
       return validity();
     };
 
@@ -196,8 +240,6 @@ function ($rootScope, $scope, $stateParams) {
 
     $scope.doSignup = function() {
       $scope.signup.username1 = $rootScope.userName;
-      console.info($scope.signup);
-      // console.info($rootScope.auth.currentUser.uid);
       userFactory.post($rootScope.auth.currentUser.uid, $scope.signup);
       $window.location.href = ("#/side-menu/news");
     }

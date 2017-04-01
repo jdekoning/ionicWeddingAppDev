@@ -13,12 +13,12 @@
     <div class="list card">
       <div class="item item-calm item-divider">Onze captains!</div>
       <div class="item item-body">
-        <img class="full-image" src="img/Ceremoniemeesters.jpg">
+        <img class="full-image" ng-src="img/Ceremoniemeesters.jpg">
         <h2>
           Wil je een stukje doen? Of heb je nog andere vragen?
           Neem dan contact op met onze captains:
         </h2>
-        <a class="button button-calm" href="mailto:<<captains mail>>"><i class="icon ion-android-mail"></i> captainsoftheloveboat@gmail.com</a>
+        <a class="button button-calm" ng-click="doMail()"><i class="icon ion-android-mail"></i> {{contacts.ceremonymail}}</a>
       </div>
       </div>
     </div>

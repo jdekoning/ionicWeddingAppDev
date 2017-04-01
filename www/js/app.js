@@ -13,7 +13,19 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
   $ionicConfigProvider.views.maxCache(5);
 })
 
-.run(function($ionicPlatform, $cordovaMedia, $rootScope, $window, $ionicLoading, $timeout, userFactory) {
+.run(function($ionicPlatform, $ionicPopup, $cordovaMedia, $rootScope, $window, $ionicLoading, $timeout, userFactory) {
+
+  // Disable BACK button on home
+  $ionicPlatform.registerBackButtonAction(function(event) {
+    $ionicPopup.confirm({
+      title: 'De app sluiten?'
+    }).then(function(res) {
+      if (res) {
+        ionic.Platform.exitApp();
+      }
+    })
+  }, 100);
+
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -51,24 +63,18 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
         $rootScope.hide()
       },200);
     });
-    console.info(ionic.Platform.platform());
+
     if(ionic.Platform.platform()=='win32'){
-      console.log("windows platform, playing Audio manually");
+      console.debug("windows platform, playing Audio manually");
       var audio = new Audio('../audio/The_Love_Boat_old_school.mp3');
       audio.play();
     }
     else {
       var mediaStatusCallback = function(status) {
-        if(status == 1) {
-          console.debug("music starting");
-        } else if (status == 2){
-          console.debug("music playing");
-        } else if (status == 4){
-          srcMedia.play();
-        }
-        else {
-          console.debug("no music status")
-        }
+        if(status == 1) {}
+        else if (status == 2){}
+        else if (status == 4){srcMedia.play();}
+        else {}
       };
       var crowdSrc = ionic.Platform.isAndroid() ? "/android_asset/www/audio/The_Love_Boat_old_school.mp3" : "audio/The_Love_Boat_old_school.mp3.mp3";
       var srcMedia = new Media(crowdSrc, function() {console.debug("succesfully loaded audio")}, null, mediaStatusCallback);
@@ -79,6 +85,7 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
   $rootScope.device = ionic.Platform.device();
   $rootScope.userEmail = "";
   $rootScope.userName = "";
+  $rootScope.uid = "";
   $rootScope.userInfo = {
     name1:"",
     username1:"",
@@ -91,7 +98,8 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
     vegetarian:false,
     vegetariantext:"",
     email:"",
-    otherinfo:""};
+    otherinfo:"",
+    isadmin:false};
   $rootScope.auth = firebase.auth();
   $rootScope.emailPostFix = "@trouwapp.nl";
 
@@ -103,14 +111,18 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
   };
 
   $rootScope.logout = function() {
-    $window.location.href = ("#/login");
-    $rootScope.auth.signOut().then(function() {
-      // firebase.goOffline();
-      $rootScope.resetSignupData();
-    }, function(error) {
-      console.error(error);
-    });
-
+    $ionicPopup.confirm({
+      title: 'Weet je zeker dat je uit wilt loggen?'
+    }).then(function(res) {
+      if (res) {
+        $rootScope.auth.signOut().then(function() {
+          $rootScope.resetSignupData();
+          ionic.Platform.exitApp();
+        }, function(error) {
+          console.error(error);
+        });
+      }
+    })
   };
 
   $rootScope.resetSignupData = function() {
@@ -126,16 +138,18 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
       vegetarian:false,
       vegetariantext:"",
       email:"",
-      otherinfo:""};
+      otherinfo:"",
+      isadmin:false
+    };
   };
 
   $rootScope.checkSession = function(origin) {
-    // console.debug("checking session");
     $rootScope.auth.onAuthStateChanged(function(user, error) {
       if (user) {
         console.debug("User found");
         $rootScope.userName = user.email.replace($rootScope.emailPostFix,"");
         $rootScope.userEmail = user.email;
+        $rootScope.uid = user.uid;
         var userObject = userFactory.query(user.uid);
         userObject.$loaded()
           .then(function() {
@@ -152,20 +166,21 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
                 vegetarian: userObject.vegetarian,
                 vegetariantext: userObject.vegetariantext,
                 email: userObject.email,
-                otherinfo: userObject.otherinfo
+                otherinfo: userObject.otherinfo,
+                isadmin: userObject.isadmin
               };
               if(origin == 'login'){
-                console.log("found all data at login page, redirect news");
+                console.debug("found all data at login page, redirect news");
                 $window.location.href = ("#/side-menu/news");
               }
               if(origin == 'signup'){
-                console.log("found all data at signup page, redirect news");
+                console.debug("found all data at signup page, redirect news");
                 $window.location.href = ("#/side-menu/news");
               }
             }
             else {
               if(origin != 'signup') {
-                console.log("query succeeded at page other that signup, redirect to signup");
+                console.debug("query succeeded at page other that signup, redirect to signup");
                 $window.location.href = ("#/signup");
               }
             }
@@ -175,7 +190,7 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
           });
       } else {
         if(origin != 'login') {
-          console.log("did not found user outside, login page, redirect to login");
+          console.debug("did not found user outside, login page, redirect to login");
           $rootScope.userEmail = "";
           $rootScope.resetSignupData();
           $window.location.href = ("#/login");
@@ -247,14 +262,10 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
       var validate = $parse(attrs.multi)(scope);
 
       ngModelCtrl.$viewChangeListeners.push(function () {
-        // ngModelCtrl.$setValidity('multi', validate());
         $rootScope.$broadcast('multi:valueChanged');
       });
 
       var deregisterListener = scope.$on('multi:valueChanged', function (event) {
-        console.log("attributes: "+ attrs.multi);
-        console.log("scope: "+ scope);
-        console.log("validity: "+ validate());
         ngModelCtrl.$setValidity('multi', validate());
       });
       scope.$on('$destroy', deregisterListener); // optional, only required for $rootScope.$on
@@ -262,16 +273,17 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
   };
 }])
 
-.filter('toArray', function() { return function(obj) {
-  //real mess, somehow got the toArray to work :S
-  if (!(obj instanceof Object)) return obj;
-  var newobj = _.clone(obj);
-  delete newobj.$$conf;
-  delete newobj.$id;
-  delete newobj.$priority;
-  delete newobj.$resolved;
-  delete newobj.__proto__;
-  return _.map(newobj, function(val, key) {
-    return Object.defineProperty(val, '$key', {value: key});
-  });
-}});
+.filter('orderObjectBy', function() {
+  return function(items, field, reverse) {
+    var filtered = [];
+    angular.forEach(items, function(item, key) {
+      item.$key=key;
+      filtered.push(item);
+    });
+    filtered.sort(function (a, b) {
+      return (a[field] > b[field] ? 1 : -1);
+    });
+    if(reverse) filtered.reverse();
+    return filtered;
+  };
+});

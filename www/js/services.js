@@ -1,8 +1,7 @@
 angular.module('app.services', ['firebase'])
 
 
-  .factory('newsFactory', ['$firebaseObject', function($firebaseArray){
-    //TODO object should be array
+  .factory('newsFactory', ['$firebaseArray', function($firebaseArray){
     var storageRef = firebase.database().ref('news');
     return {
       query: function() {
@@ -31,12 +30,11 @@ angular.module('app.services', ['firebase'])
     };
   }])
 
-  .factory('bulletinFactory', ['$firebaseObject', function($firebaseArray){
-    //TODO object should be array
+  .factory('bulletinFactory', ['$firebaseArray', function($firebaseArray){
     var storageRef = firebase.database().ref('bulletin');
     return {
       query: function() {
-        return $firebaseArray(storageRef.orderByChild("date").limitToLast(3))
+        return $firebaseArray(storageRef.orderByChild("date").limitToLast(25))
       },
       post: function(storageObject) {storageRef.push().set(storageObject)}
     };

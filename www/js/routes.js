@@ -46,7 +46,6 @@ angular.module('app.routes', ['firebase'])
         controller: 'dresscodeCtrl',
         resolve: {
           dresscode: ['dresscodeFactory', function(dresscodeFactory){
-            console.log("trying dresscode query");
             return dresscodeFactory.query();
           }]
           ,

@@ -11,39 +11,56 @@
   </div>
   <ion-content padding="true" class="has-subheader has-header">
     <div class="card">
-      <div class="item item-calm item-divider">
-        Planning
-      </div>
-      <div class="item">
-        {{venue.txt0}}<br>
-        {{venue.txt1}}<br>
-        {{venue.txt2}}
-      </div>
-    </div>
-    <div class="card">
-      <div class="item item-assertive item-divider">
-        Reisopties
-      </div>
-      <div class="item item-text-wrap">
-        {{venue.txt3}}<br>
-        {{venue.txt4}}<br>
-        {{venue.txt5}}
+      <div class="item item-text-wrap item-body">
+        De bruiloft vindt plaats op vrijdag 25 augustus 2017. Neem je ticket mee om aan boord te komen. Onze crew verwelkomt je graag!
       </div>
     </div>
     <div class="card">
       <div class="item item-calm item-divider">
-        {{venue.txt6}}
+        15:00u verzamelen
       </div>
       <div class="item item-text-wrap">
-        {{venue.txt7}}
+        {{venue.verzamelen}}
+      </div>
+      <div class="item item-thumbnail-left item-text-wrap">
+        <img ng-src="img/Auto.svg">
+        {{venue.auto}}
+      </div>
+      <div class="item item-thumbnail-left item-text-wrap">
+        <img ng-src="img/Bus.svg">
+          {{venue.bus}}
+      </div>
+      <div class="item item-thumbnail-left item-text-wrap">
+        <img ng-src="img/Bus.svg">
+          {{venue.ov}}
       </div>
     </div>
     <div class="card">
-      <div class="item item-assertive item-divider">
-        {{venue.txt8}}
+      <div class="item item-calm item-divider">
+        15:15u vertrek
       </div>
-      <div class="item item-text-wrap">
-        {{venue.txt9}}
+      <div class="item item-thumbnail-left item-text-wrap">
+        <img ng-src="img/icoon_app.svg">
+        {{venue.vertrek}}
+      </div>
+    </div>
+    <div class="card">
+      <div class="item item-calm item-divider">
+        01:00u aankomst
+      </div>
+      <div class="item item-thumbnail-left item-text-wrap">
+        <img ng-src="img/icoon_app.svg">
+          {{venue.einde1}}
+          {{venue.einde2}}
+      </div>
+    </div>
+    <div class="card">
+      <div class="item item-calm item-divider">
+        Hoteltip: {{venue.hoteltip}}
+      </div>
+      <div class="item item-thumbnail-left item-text-wrap">
+        <img ng-src="img/Hotel.svg">
+        {{venue.overnachting}}
       </div>
     </div>
   </ion-content>
