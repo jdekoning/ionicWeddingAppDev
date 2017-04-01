@@ -21,13 +21,15 @@
           <span class="input-label">Ticketnummer: </span>
           <input class="padding" type="text" name="username1" ng-value="correctuser" disabled>
         </label>
-        <label class="item item-input" id="signup-input13">
+        <label class="item item-input item-icon-right" id="signup-input13">
           <span class="input-label">Eventueel naam partner: </span>
-          <input type="text" ng-model="signup.name2" placeholder="Schrijf hier">
+          <input type="text" name="name2" ng-model="signup.name2" placeholder="Schrijf hier" multi="validateBoth">
+          <i ng-show="signupForm.name2.$error.multi" class="icon ion-help-buoy assertive"></i>
         </label>
-        <label class="item item-input" id="signup-input14">
+        <label class="item item-input item-icon-right" id="signup-input14">
           <span class="input-label">Ticketnummer partner: </span>
-          <input type="text" ng-model="signup.username2" placeholder="Schrijf hier">
+          <input type="text" name="username2" ng-model="signup.username2" placeholder="Schrijf hier" multi="validateBoth">
+          <i ng-show="signupForm.username2.$error.multi" class="icon ion-help-buoy assertive"></i>
         </label>
         <li class="item item-toggle row">
           <div class="inline col-67 padding">Hele dag aanwezig?</div>
@@ -69,9 +71,10 @@
           <input type="text" ng-model="signup.vegetariantext" placeholder="Eventuele opmerkingen">
         </label>
         <ion-item class="item text-center item-divider item-text-wrap">Via dit emailadres kan onze crew contact met je opnemen over zaken die geheim zijn voor het bruidspaar.</ion-item>
-        <label class="item item-input">
+        <label class="item item-input item-icon-right">
           <span class="input-label">Emailadres: </span>
-          <input type="email" ng-model="signup.email" placeholder="Hier graag je email">
+          <input type="email" name="email" ng-model="signup.email" placeholder="Hier graag je email" required>
+          <i ng-show="signupForm.email.$invalid" class="icon ion-help-buoy assertive"></i>
         </label>
         <label class="item item-input">
           <span class="input-label">Wil je nog iets toevoegen?</span>

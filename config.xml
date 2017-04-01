@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicfire.weddingapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>weddingApp</name>
+<widget id="com.ionicfire.weddingapp" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Love Boat Aart en Paul</name>
   <description>
-        An Awesome Wedding Client App
-    </description>
+    An Awesome Wedding Client App
+  </description>
   <author email="dev.deKoning@gmail.com" href="http://example.com/">
-      Jaap de Koning
-    </author>
+    Jaap de Koning
+  </author>
   <content src="index.html"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
@@ -74,6 +74,6 @@
     <splash src="resources\android\splash\drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
     <splash src="resources\android\splash\drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
   </platform>
-  <icon src="resources\android\icon\drawable-xhdpi-icon.png"/>
+  <icon src="resources\android\icon\drawable-xxxhdpi-icon.png"/>
   <allow-navigation href="http://192.168.10.206:8100"/>
 </widget>

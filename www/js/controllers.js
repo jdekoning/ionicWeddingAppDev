@@ -108,14 +108,22 @@ function ($rootScope, $scope, $stateParams) {
     }
   }])
 
-.controller('loginCtrl', ['$scope', '$rootScope', '$window',
-  function ($scope, $rootScope, $window) {
+.controller('loginCtrl', ['$scope', '$rootScope', '$window', '$interval',
+  function ($scope, $rootScope, $window, $interval) {
     $rootScope.checkSession('login');
-    var timestampDiff = 1503666000 - new Date().getTime()/1000;
-    $scope.days = Math.floor(timestampDiff/3600/24);
-    $scope.hours = Math.floor((timestampDiff - $scope.days*3600*24)/3600);
-    $scope.minutes = Math.floor((timestampDiff - $scope.days*3600*24 - $scope.hours*3600)/60);
-    $scope.seconds = Math.floor((timestampDiff - $scope.days*3600*24 - $scope.hours*3600 - $scope.minutes*60));
+
+    $scope.days = 0;
+    $scope.hours = 0;
+    $scope.minutes = 0;
+    $scope.seconds = 0;
+
+    $interval(function() {
+      timestampDiff = 1503666000 - new Date().getTime() / 1000;
+      $scope.days = Math.floor(timestampDiff/3600/24);
+      $scope.hours = Math.floor((timestampDiff - $scope.days*3600*24)/3600);
+      $scope.minutes = Math.floor((timestampDiff - $scope.days*3600*24 - $scope.hours*3600)/60);
+      $scope.seconds = Math.floor((timestampDiff - $scope.days*3600*24 - $scope.hours*3600 - $scope.minutes*60));
+    },100);
 
     $scope.user = {
       username: "",
@@ -167,6 +175,15 @@ function ($rootScope, $scope, $stateParams) {
     $rootScope.checkSession('signup');
     $scope.signup = $rootScope.userInfo;
     $scope.correctuser = "";
+
+    $scope.validateBoth = function () {
+      var validity = function() {
+        if($scope.signup.name2 === "" && $scope.signup.username2 === "") {return true}
+        else return $scope.signup.name2 !== "" && $scope.signup.username2 !== "";
+      };
+      console.log("validity: " + validity());
+      return validity();
+    };
 
     $rootScope.$watch(
       function() { return $rootScope.userName; },

@@ -58,10 +58,20 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
       audio.play();
     }
     else {
-      var crowdSrc = ionic.Platform.isAndroid() ? "/android_asset/www/audio/The_Love_Boat_old_school.mp3" : "audio/The_Love_Boat_old_school.mp3.mp3";
-      var someFunc = function () {
+      var mediaStatusCallback = function(status) {
+        if(status == 1) {
+          console.debug("music starting");
+        } else if (status == 2){
+          console.debug("music playing");
+        } else if (status == 4){
+          srcMedia.play();
+        }
+        else {
+          console.debug("no music status")
+        }
       };
-      var srcMedia = new Media(crowdSrc, null, null, someFunc);
+      var crowdSrc = ionic.Platform.isAndroid() ? "/android_asset/www/audio/The_Love_Boat_old_school.mp3" : "audio/The_Love_Boat_old_school.mp3.mp3";
+      var srcMedia = new Media(crowdSrc, function() {console.debug("succesfully loaded audio")}, null, mediaStatusCallback);
       srcMedia.play();
     }
   });
@@ -228,6 +238,29 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
     }
   };
 })
+
+.directive('multi', ['$parse', '$rootScope', function ($parse, $rootScope) {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function (scope, elem, attrs, ngModelCtrl) {
+      var validate = $parse(attrs.multi)(scope);
+
+      ngModelCtrl.$viewChangeListeners.push(function () {
+        // ngModelCtrl.$setValidity('multi', validate());
+        $rootScope.$broadcast('multi:valueChanged');
+      });
+
+      var deregisterListener = scope.$on('multi:valueChanged', function (event) {
+        console.log("attributes: "+ attrs.multi);
+        console.log("scope: "+ scope);
+        console.log("validity: "+ validate());
+        ngModelCtrl.$setValidity('multi', validate());
+      });
+      scope.$on('$destroy', deregisterListener); // optional, only required for $rootScope.$on
+    }
+  };
+}])
 
 .filter('toArray', function() { return function(obj) {
   //real mess, somehow got the toArray to work :S
