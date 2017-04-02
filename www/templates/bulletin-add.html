@@ -6,7 +6,7 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <form id="bulletinform" name="bulletinform" ng-submit="submitBulletin()">
+    <form id="bulletinForm" name="form.bulletinForm" ng-submit="submitBulletin()">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">De titel</span>
@@ -17,10 +17,10 @@
                  required
                  ng-model="mybulletin.title">
         </label>
-        <div ng-show="(bulletinform.title.$error.minlength || bulletinform.title.$error.maxlength || bulletinform.title.$error.required) && bulletinform.title.$dirty" class="form-error assertive">
-          <div ng-show="bulletinform.title.$error.required && bulletinform.title.$dirty">Je moet een beschrijving toevoegen</div>
-          <div ng-show="bulletinform.title.$error.minlength && bulletinform.title.$dirty">Je bericht is te kort</div>
-          <div ng-show="bulletinform.title.$error.maxlength && bulletinform.title.$dirty">Je bericht is te lang</div>
+        <div ng-show="(form.bulletinForm.title.$error.minlength || form.bulletinForm.title.$error.maxlength || form.bulletinForm.title.$error.required) && form.bulletinForm.title.$dirty" class="form-error assertive">
+          <div ng-show="form.bulletinForm.title.$error.required && form.bulletinForm.title.$dirty">Je moet een beschrijving toevoegen</div>
+          <div ng-show="form.bulletinForm.title.$error.minlength && form.bulletinForm.title.$dirty">Je bericht is te kort</div>
+          <div ng-show="form.bulletinForm.title.$error.maxlength && form.bulletinForm.title.$dirty">Je bericht is te lang</div>
         </div>
         <label class="item item-input item-text-wrap">
           <span class="input-label">De beschrijving</span>
@@ -31,13 +31,13 @@
                  required
                  ng-model="mybulletin.description">
         </label>
-        <div ng-show="(bulletinform.description.$error.minlength || bulletinform.description.$error.maxlength || bulletinform.description.$error.required) && bulletinform.description.$dirty" class="form-error assertive">
-          <div ng-show="bulletinform.description.$error.required && bulletinform.description.$dirty">Je moet een beschrijving toevoegen</div>
-          <div ng-show="bulletinform.description.$error.minlength && bulletinform.description.$dirty">Je bericht is te kort</div>
-          <div ng-show="bulletinform.description.$error.maxlength && bulletinform.description.$dirty">Je bericht is te lang</div>
+        <div ng-show="(form.bulletinForm.description.$error.minlength || form.bulletinForm.description.$error.maxlength || form.bulletinForm.description.$error.required) && form.bulletinForm.description.$dirty" class="form-error assertive">
+          <div ng-show="form.bulletinForm.description.$error.required && form.bulletinForm.description.$dirty">Je moet een beschrijving toevoegen</div>
+          <div ng-show="form.bulletinForm.description.$error.minlength && form.bulletinForm.description.$dirty">Je bericht is te kort</div>
+          <div ng-show="form.bulletinForm.description.$error.maxlength && form.bulletinForm.description.$dirty">Je bericht is te lang</div>
         </div>
         <label class="item">
-          <button ng-disabled="bulletinform.$invalid" class="button button-block button-positive" type="submit">Submit</button>
+          <button ng-disabled="form.bulletinForm.$invalid" class="button button-block button-positive" type="submit">Submit</button>
         </label>
       </div>
     </form>

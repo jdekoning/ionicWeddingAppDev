@@ -6,7 +6,7 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <form id="newsform" name="newsform" ng-submit="submitNews()">
+    <form id="newsform" name="form.newsForm" ng-submit="submitNews()">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">De titel</span>
@@ -17,10 +17,10 @@
                  required
                  ng-model="mynews.title">
         </label>
-        <div ng-show="(newsform.title.$error.minlength || newsform.title.$error.maxlength || newsform.title.$error.required) && newsform.title.$dirty" class="form-error assertive">
-          <div ng-show="newsform.title.$error.required && newsform.title.$dirty">Je moet een beschrijving toevoegen</div>
-          <div ng-show="newsform.title.$error.minlength && newsform.title.$dirty">Je bericht is te kort</div>
-          <div ng-show="newsform.title.$error.maxlength && newsform.title.$dirty">Je bericht is te lang</div>
+        <div ng-show="(form.newsForm.title.$error.minlength || form.newsForm.title.$error.maxlength || form.newsForm.title.$error.required) && form.newsForm.title.$dirty" class="form-error assertive">
+          <div ng-show="form.newsForm.title.$error.required && form.newsForm.title.$dirty">Je moet een beschrijving toevoegen</div>
+          <div ng-show="form.newsForm.title.$error.minlength && form.newsForm.title.$dirty">Je bericht is te kort</div>
+          <div ng-show="form.newsForm.title.$error.maxlength && form.newsForm.title.$dirty">Je bericht is te lang</div>
         </div>
         <label class="item item-input item-text-wrap">
           <span class="input-label">De beschrijving</span>
@@ -31,13 +31,13 @@
                  required
                  ng-model="mynews.description">
         </label>
-        <div ng-show="(newsform.description.$error.minlength || newsform.description.$error.maxlength || newsform.description.$error.required) && newsform.description.$dirty" class="form-error assertive">
-          <div ng-show="newsform.description.$error.required && newsform.description.$dirty">Je moet een beschrijving toevoegen</div>
-          <div ng-show="newsform.description.$error.minlength && newsform.description.$dirty">Je bericht is te kort</div>
-          <div ng-show="newsform.description.$error.maxlength && newsform.description.$dirty">Je bericht is te lang</div>
+        <div ng-show="(form.newsForm.description.$error.minlength || form.newsForm.description.$error.maxlength || form.newsForm.description.$error.required) && form.newsForm.description.$dirty" class="form-error assertive">
+          <div ng-show="form.newsForm.description.$error.required && form.newsForm.description.$dirty">Je moet een beschrijving toevoegen</div>
+          <div ng-show="form.newsForm.description.$error.minlength && form.newsForm.description.$dirty">Je bericht is te kort</div>
+          <div ng-show="form.newsForm.description.$error.maxlength && form.newsForm.description.$dirty">Je bericht is te lang</div>
         </div>
         <label class="item">
-          <button ng-disabled="newsform.$invalid" class="button button-block button-positive" type="submit">Submit</button>
+          <button ng-disabled="form.newsForm.$invalid" class="button button-block button-positive" type="submit">Submit</button>
         </label>
       </div>
     </form>

@@ -1,13 +1,20 @@
 angular.module('app.controllers', [])
 
-.controller('newsCtrl', ['$rootScope', '$scope', '$stateParams', '$ionicModal', 'newsFactory', 'news',
-function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
+.controller('newsCtrl', ['$rootScope', '$scope', '$ionicPopup', '$stateParams', '$ionicModal', 'newsFactory', 'news',
+function ($rootScope, $scope, $ionicPopup, $stateParams, $ionicModal, newsFactory, news) {
   $rootScope.checkSession('news');
   $scope.news = news;
+  $scope.form = {};
   $scope.isadmin = false;
 
   $scope.removeEntry = function(item) {
-    news.$remove(item.$key)
+    $ionicPopup.confirm({
+      title: 'Delete nieuws item?'
+    }).then(function(res) {
+      if (res) {
+        news.$remove(item.$key)
+      }
+    })
   };
 
   $scope.getImage = function(item) {
@@ -23,15 +30,15 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
   $ionicModal.fromTemplateUrl('templates/news-add.html', {
     scope: $scope
   }).then(function(modal) {
-    $scope.newsForm = modal;
+    $scope.newsModal = modal;
   });
 
   $scope.addNews = function() {
-    $scope.newsForm.show();
+    $scope.newsModal.show();
   };
 
   $scope.closeAddNews = function() {
-    $scope.newsForm.hide();
+    $scope.newsModal.hide();
   };
 
   $scope.mynews = {title:"", owner:"", description:"", date:"", simpledate: "", uid:"", imgurl:""};
@@ -46,16 +53,17 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
     newsFactory.post($scope.mynews);
 
     $scope.mynews = {title:"", owner:"", description:"", date:"", simpledate: "", uid:"", imgurl:""};
-    $scope.newsForm.$pristine = true;
+    $scope.form.newsForm.$setPristine();
 
     $scope.closeAddNews();
   };
 }])
 
-.controller('bulletinCtrl', ['$rootScope', '$scope', '$stateParams', '$ionicModal', 'bulletinFactory', 'bulletin',
-  function ($rootScope, $scope, $stateParams, $ionicModal, bulletinFactory, bulletin) {
+.controller('bulletinCtrl', ['$rootScope', '$scope', '$ionicPopup', '$stateParams', '$ionicModal', 'bulletinFactory', 'bulletin',
+  function ($rootScope, $scope, $ionicPopup, $stateParams, $ionicModal, bulletinFactory, bulletin) {
     $rootScope.checkSession('bulletin');
     $scope.bulletin = bulletin;
+    $scope.form = {};
 
     $scope.isadmin = false;
     $scope.uid = "";
@@ -79,22 +87,37 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
       function() { $scope.isadmin = $rootScope.userInfo.isadmin;}
     );
 
+    $scope.$watch('bulletinForm', function(bulletinForm) {
+      if(bulletinForm) {
+        $scope.formDebugText = 'Form in Scope';
+      }
+      else {
+        $scope.formDebugText = 'Form is Undefined';
+      }
+    });
+
     $scope.removeEntry = function(item) {
-      bulletin.$remove(item.$key)
+      $ionicPopup.confirm({
+        title: 'Delete prikbord item?'
+      }).then(function(res) {
+        if (res) {
+          bulletin.$remove(item.$key)
+        }
+      })
     };
 
     $ionicModal.fromTemplateUrl('templates/bulletin-add.html', {
       scope: $scope
     }).then(function(modal) {
-      $scope.bulletinForm = modal;
+      $scope.bulletinModal = modal;
     });
 
     $scope.addBulletin = function() {
-      $scope.bulletinForm.show();
+      $scope.bulletinModal.show();
     };
 
     $scope.closeAddBulletin = function() {
-      $scope.bulletinForm.hide();
+      $scope.bulletinModal.hide();
     };
 
     $scope.mybulletin = {title:"", owner:"", description:"", date:"", simpledate: "", uid:"", imgurl:""};
@@ -110,10 +133,9 @@ function ($rootScope, $scope, $stateParams, $ionicModal, newsFactory, news) {
       bulletinFactory.post($scope.mybulletin);
 
       $scope.mybulletin = {title:"", owner:"", description:"", date:"", simpledate: "", uid:"", imgurl:""};
-      $scope.bulletinForm.$pristine = true;
+      $scope.form.bulletinForm.$setPristine();
 
       $scope.closeAddBulletin();
-      // $scope.popover.hide();
     };
   }])
 
