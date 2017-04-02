@@ -1,6 +1,6 @@
 {
   "name": "WeddingApp",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "weddingApp: An Ionic project",
   "dependencies": {
     "firebase": "^3.7.3",

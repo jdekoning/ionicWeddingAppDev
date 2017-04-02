@@ -243,6 +243,10 @@ function ($rootScope, $scope, $stateParams) {
     $scope.signup = $rootScope.userInfo;
     $scope.correctuser = "";
 
+    $scope.logout = function() {
+      $rootScope.logout();
+    };
+
     $scope.validateBoth = function () {
       var validity = function() {
         if($scope.signup.name2 === "" && $scope.signup.username2 === "") {return true}

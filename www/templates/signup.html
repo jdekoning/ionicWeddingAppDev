@@ -1,6 +1,9 @@
 <ion-view title="Aanmelden" id="page15">
   <ion-header-bar align-title="center" class="bar-calm">
     <h1 class="title">Aanmelden</h1>
+    <button class="button button-assertive" ng-click="logout()">
+      logout
+    </button>
   </ion-header-bar>
   <div class="spread bar bar-subheader">
     <i class="icon ion-shrimp"></i>
@@ -21,6 +24,7 @@
           <span class="input-label">Ticketnummer: </span>
           <input class="padding" type="text" name="username1" ng-value="correctuser" disabled>
         </label>
+        <ion-item class="item text-center item-divider item-text-wrap">Wil jij de registratie & communicatie doen voor jou en je partner? Vul dan ook zijn/haar naam & ticketnr. in. Wil je allebei separaat toegang tot de app/website? Laat dan de twee onderstaande velden leeg.</ion-item>
         <label class="item item-input item-icon-right" id="signup-input13">
           <span class="input-label">Eventueel naam partner: </span>
           <input type="text" name="name2" ng-model="signup.name2" placeholder="Schrijf hier" multi="validateBoth">
