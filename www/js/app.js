@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.controllers', 'app.routes', 'app.directives','app.services'])
+angular.module('app', ['ionic', 'firebase', 'ngCordova', 'app.controllers', 'app.routes', 'app.directives','app.services'])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider){
 
@@ -67,6 +67,10 @@ angular.module('app', ['ionic', 'firebase', 'ngLodash', 'ngCordova', 'app.contro
     if(ionic.Platform.platform()=='win32'){
       console.debug("windows platform, playing Audio manually");
       var audio = new Audio('../audio/The_Love_Boat_old_school.mp3');
+      audio.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+      }, false);
       audio.play();
     }
     else {
