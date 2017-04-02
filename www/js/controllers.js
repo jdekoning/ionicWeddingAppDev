@@ -224,7 +224,7 @@ function ($rootScope, $scope, $stateParams) {
     $scope.validateBoth = function () {
       var validity = function() {
         if($scope.signup.name2 === "" && $scope.signup.username2 === "") {return true}
-        else return $scope.signup.name2 !== "" && $scope.signup.username2 !== "";
+        else return $scope.signup.name2 !== "" && $scope.signup.username2 !== "" && $scope.signup.username2.length == 4;
       };
       return validity();
     };

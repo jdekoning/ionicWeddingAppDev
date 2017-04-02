@@ -10,14 +10,34 @@
       <div class="list">
         <label class="item item-input">
           <span class="input-label">De titel</span>
-          <input type="text" ng-model="mybulletin.title">
+          <input type="text"
+                 name="title"
+                 ng-minlength="2"
+                 ng-maxlength="30"
+                 required
+                 ng-model="mybulletin.title">
         </label>
-        <label class="item item-input">
-          <span class="input-label">De text</span>
-          <input type="text" ng-model="mybulletin.description">
+        <div ng-show="(bulletinform.title.$error.minlength || bulletinform.title.$error.maxlength || bulletinform.title.$error.required) && bulletinform.title.$dirty" class="form-error assertive">
+          <div ng-show="bulletinform.title.$error.required && bulletinform.title.$dirty">Je moet een beschrijving toevoegen</div>
+          <div ng-show="bulletinform.title.$error.minlength && bulletinform.title.$dirty">Je bericht is te kort</div>
+          <div ng-show="bulletinform.title.$error.maxlength && bulletinform.title.$dirty">Je bericht is te lang</div>
+        </div>
+        <label class="item item-input item-text-wrap">
+          <span class="input-label">De beschrijving</span>
+          <input type="text"
+                 name="description"
+                 ng-minlength="2"
+                 ng-maxlength="300"
+                 required
+                 ng-model="mybulletin.description">
         </label>
+        <div ng-show="(bulletinform.description.$error.minlength || bulletinform.description.$error.maxlength || bulletinform.description.$error.required) && bulletinform.description.$dirty" class="form-error assertive">
+          <div ng-show="bulletinform.description.$error.required && bulletinform.description.$dirty">Je moet een beschrijving toevoegen</div>
+          <div ng-show="bulletinform.description.$error.minlength && bulletinform.description.$dirty">Je bericht is te kort</div>
+          <div ng-show="bulletinform.description.$error.maxlength && bulletinform.description.$dirty">Je bericht is te lang</div>
+        </div>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Submit</button>
+          <button ng-disabled="bulletinform.$invalid" class="button button-block button-positive" type="submit">Submit</button>
         </label>
       </div>
     </form>

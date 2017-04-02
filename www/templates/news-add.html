@@ -10,14 +10,34 @@
       <div class="list">
         <label class="item item-input">
           <span class="input-label">De titel</span>
-          <input type="text" ng-model="mynews.title">
+          <input type="text"
+                 name="title"
+                 ng-minlength="2"
+                 ng-maxlength="30"
+                 required
+                 ng-model="mynews.title">
         </label>
-        <label class="item item-input">
+        <div ng-show="(newsform.title.$error.minlength || newsform.title.$error.maxlength || newsform.title.$error.required) && newsform.title.$dirty" class="form-error assertive">
+          <div ng-show="newsform.title.$error.required && newsform.title.$dirty">Je moet een beschrijving toevoegen</div>
+          <div ng-show="newsform.title.$error.minlength && newsform.title.$dirty">Je bericht is te kort</div>
+          <div ng-show="newsform.title.$error.maxlength && newsform.title.$dirty">Je bericht is te lang</div>
+        </div>
+        <label class="item item-input item-text-wrap">
           <span class="input-label">De beschrijving</span>
-          <input type="text" ng-model="mynews.description">
+          <input type="text"
+                 name="description"
+                 ng-minlength="2"
+                 ng-maxlength="300"
+                 required
+                 ng-model="mynews.description">
         </label>
+        <div ng-show="(newsform.description.$error.minlength || newsform.description.$error.maxlength || newsform.description.$error.required) && newsform.description.$dirty" class="form-error assertive">
+          <div ng-show="newsform.description.$error.required && newsform.description.$dirty">Je moet een beschrijving toevoegen</div>
+          <div ng-show="newsform.description.$error.minlength && newsform.description.$dirty">Je bericht is te kort</div>
+          <div ng-show="newsform.description.$error.maxlength && newsform.description.$dirty">Je bericht is te lang</div>
+        </div>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Submit</button>
+          <button ng-disabled="newsform.$invalid" class="button button-block button-positive" type="submit">Submit</button>
         </label>
       </div>
     </form>
